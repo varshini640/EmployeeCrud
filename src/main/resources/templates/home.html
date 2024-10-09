@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>home</title>
+</head>
+<body>
+<div align="center">
+<h1>Employee Management</h1>
+<a href="add-record"><button>Add record</button></a>
+<a href="fetch-record"><button>Fetch record</button></a>
+</div>
+
+<div align="center" th:if="${add}">
+<form action="add-record" method="post">
+<h1>Form</h1>
+Name:<input type="text" name="name"><br><br>
+Email<input type="email" name="email"><br><br>
+Mobile:<input type="tel" pattern="{0-9}[10]" name="mobile"><br><br>
+Salary:<input type="number" name="salary"><br>
+Gender:<input type="radio" name="gender" value="male">Male
+<input type="radio" name="gender" value="female">FeMale<br>
+<br><br>
+<button>Add</button>
+</form>
+</div>
+
+<br><br>
+<div align="center" th:if="${fetch}">
+<table border=1>
+<tr>
+<th>Name</th>
+<th>EmailId</th>
+<th>Mobile</th>
+<th>Gender</th>
+<th>Salary</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+<tr th:each="emp:${employee}">
+
+<td th:text="${emp.name}"></td>
+<td th:text="${emp.email}"></td>
+<td th:text="${emp.mobile}"></td>
+<td th:text="${emp.gender}"></td>
+<td th:text="${emp.salary}"></td>
+<td><a th:href=" 'edit?id='+${emp.id}"><button>Edit</button></a></td>
+<td><a th:href=" 'delete?id='+${emp.id}"><button>delete</button></a></td>
+</tr>
+</table>
+</div>
+
+<div align="center" th:if="${edit}">
+<form action="edit" method="post">
+<h1>Form</h1>
+<input type="hidden" name="id" th:value="${record.id}">
+Name:<input type="text" name="name" th:value="${record.name}"><br><br>
+Email<input type="email" name="email" th:value="${record.email}"><br><br>
+Mobile:<input type="tel" pattern="{0-9}[10]" name="mobile" th:value="${record.mobile}"><br><br>
+Salary:<input type="number" name="salary" th:value="${record.salary}"><br>
+Gender:<input type="radio" name="gender" value="male">Male
+<input type="radio" name="gender" value="female">FeMale<br>
+<br><br>
+<button>update</button>
+</form>
+</div>
+
+
+
+<script th:if="${success}" th:inline="javascript">
+		alert([[${success}]]);
+	</script>
+
+</body>
+</html>
